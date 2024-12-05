@@ -4,6 +4,7 @@ import path from "path";
 
 export interface PluginOptions {
   tsConfigPath?: string;
+  keepTsConfig?: boolean;
 }
 
 const NAME = "vite-plugin-custom-tsconfig";
@@ -26,6 +27,7 @@ const customTsConfigPlugin = (options?: PluginOptions): Plugin => {
 
   const resolvedOptions: Required<PluginOptions> = {
     tsConfigPath: "tsconfig.build.json",
+    keepTsConfig: false,
     ...options,
   };
 
@@ -67,8 +69,10 @@ const customTsConfigPlugin = (options?: PluginOptions): Plugin => {
           `${TSCONFIG_PATH} does not contain the expected banner. ${DELETE_TIP}`
         );
       }
-
-      fs.rmSync(tsconfig);
+      
+      if (!resolvedOptions.keepTsConfig) {
+        fs.rmSync(tsconfig);
+      }
     },
   };
 };

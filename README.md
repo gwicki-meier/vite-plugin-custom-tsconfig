@@ -36,6 +36,7 @@ export default defineConfig({
     customTsConfig({
       // default: 'tsconfig.build.json'
       tsConfigPath: 'tsconfig.app.json',
+      keepTsConfig: false
     }),
   ],
 });
